@@ -40,3 +40,24 @@ missing_dob = len(df_CustomerDemographic['DOB']) - real_dob
 
 #Drop colum 'default' because the values dosent make sense
 df_CustomerDemographic.drop(['default'], axis=1, inplace = True)
+
+
+##Transanction dataset
+df_Transactions.info()
+
+#checking the prescence of the duplicate values 
+df_Transactions.duplicated().sum()
+
+#null value check
+df_Transactions.isnull().sum()
+
+#checking all orders are placed online
+pd.Series(df_Transactions['online_order']).is_unique
+
+#order status (apporved or cancelled)
+df_Transactions.pivot_table(index=['order_status'], aggfunc='size')
+
+
+
+
+
