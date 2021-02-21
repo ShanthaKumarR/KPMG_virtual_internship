@@ -38,6 +38,12 @@ df_CustomerDemographic.info()
 real_dob = df_CustomerDemographic['DOB'].count()
 missing_dob = len(df_CustomerDemographic['DOB']) - real_dob
 
+#age calculation from DOB
+now = pd.Timestamp('now')
+df_CustomerDemographic['DOB'] = pd.to_datetime(df_CustomerDemographic['DOB'], format='%m%d%y') 
+df_CustomerDemographic['DOB']  = df_CustomerDemographic['DOB'] .where(df_CustomerDemographic['DOB']  < now, df_3['DOB']  -  np.timedelta64(100, 'Y'))
+df_CustomerDemographic['DOB']  = (now - df_CustomerDemographic['DOB'] ).astype('<m8[Y]') 
+
 #Drop colum 'default' because the values dosent make sense
 df_CustomerDemographic.drop(['default'], axis=1, inplace = True)
 
