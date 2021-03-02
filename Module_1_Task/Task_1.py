@@ -26,9 +26,9 @@ df_CustomerAddress.columns
 
 sns.heatmap(df_3.isnull(), yticklabels = False, cbar = False, cmap = 'viridis')
 
-#Spelling mistake, different notation for same type examination and fixing it 
-
+# Consistency check- Spelling mistake, different notation for same type examination and fixing it 
 dups_df_CustomerDemographic = df_CustomerDemographic.pivot_table(index=['gender'], aggfunc='size')
+# Mitigation
 df_CustomerDemographic['gender'].replace(['F', 'Femal'], 'Female', inplace=True)
 df_CustomerDemographic['gender'].replace(['M'], 'Male', inplace=True)
 pd.unique(df_CustomerDemographic['gender'])
@@ -64,6 +64,13 @@ pd.Series(df_Transactions['online_order']).is_unique
 df_Transactions.pivot_table(index=['order_status'], aggfunc='size')
 
 
+#CustomerAddress dataset
+df_CustomerAddress.info()
+df_CustomerAddress.isnull().sum()
+     
+pd.Series(df_CustomerAddress['customer_id']).is_unique
 
+df_CustomerAddress.pivot_table(index=['state'], aggfunc='size')
 
-
+df_CustomerAddress['state'].replace(['New South Wales'], 'NSW', inplace=True)
+df_CustomerAddress['state'].replace([ 'Victoria'], 'VIC', inplace=True)
