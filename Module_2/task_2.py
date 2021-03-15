@@ -21,4 +21,14 @@ df_CustomerAddress = df_CustomerAddress.dropna(axis = 'columns', how = 'all')
 df_NewCustomerList.columns
 cols = ['Unnamed: 16','Unnamed: 17','Unnamed: 18','Unnamed: 19','Unnamed: 20']
 df_NewCustomerList.drop(cols, axis=1, inplace = True)
-df_NewCustomerList.columns
+print(df_NewCustomerList.columns)
+
+#age calculation from DOB
+now = pd.Timestamp('now')
+df_CustomerDemographic['DOB'] = pd.to_datetime(df_CustomerDemographic['DOB'], format='%m%d%y') 
+df_CustomerDemographic['DOB']  = df_CustomerDemographic['DOB'] .where(df_CustomerDemographic['DOB']  < now, df_CustomerDemographic['DOB']  -  np.timedelta64(100, 'Y'))
+df_CustomerDemographic['DOB']  = (now - df_CustomerDemographic['DOB'] ).astype('<m8[Y]')
+#print(df_CustomerDemographic.DOB)
+
+#Drop colum 'default' because the values dosent make sense
+df_CustomerDemographic.drop(['default'], axis=1, inplace = True)
